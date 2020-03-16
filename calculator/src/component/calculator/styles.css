@@ -1,0 +1,46 @@
+div .form-calculadora {
+    height: 300px;
+}
+
+div .display {
+    width: 50%;
+    border: 1px;
+    border-style: solid;
+    font-weight: bold;
+}
+
+div .teclado {
+    width: 50%;
+    height: 100%;
+    display: flex;
+}
+
+div .teclado-operacao {
+    width: 25%;
+    height: 100%;
+    border: 1px;
+    border-style: solid;
+    font-weight: bold;
+}
+
+div .teclado-numerico {
+    width: 75%;
+    height: 100%;
+    border: 1px;
+    border-style: solid;
+    font-weight: bold;
+    align-items: center;
+}
+
+div .horizontal {
+    background: #555555;
+    display: flex;
+    justify-content: space-between;
+    padding: 05px;
+    height: 25%;
+}
+
+div .horizontal button {
+    height: 100%;
+    width: 100%;
+}
