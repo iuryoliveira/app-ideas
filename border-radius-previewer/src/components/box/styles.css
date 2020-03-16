@@ -1,0 +1,17 @@
+#box-form {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    width: 700px;
+}
+
+#box-form input {
+    display: flex;
+}
+
+#box-form textarea {
+    margin: 20px;
+    width: 200px;
+    height: 100px;
+    display: flex;
+}
