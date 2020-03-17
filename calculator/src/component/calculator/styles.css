@@ -36,13 +36,21 @@ button.last-button {
     height: 100%;
 }
 
-div .teclado-operacao {
+div.teclado-operacao {
     width: 15%;
-    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-div .teclado-operacao button {
+button.operacao-button {
+    width: 100%;
+}
+
+div.last-operaction {
+    width: 700px;
+    background: red;
+}
+
+button.last-operacao-button {
     width: 100%;
 }

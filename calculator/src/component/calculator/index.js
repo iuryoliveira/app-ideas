@@ -25,13 +25,13 @@ export default class Calculator extends Component {
                         </div>
                     </div> 
                     <div className="teclado-operacao">
-                        <button>+</button>
-                        <button>-</button>
-                        <button>*</button>
-                        <button>/</button>
+                        <button className="operacao-button">+</button>
+                        <button className="operacao-button">-</button>
+                        <button className="operacao-button">*</button>
+                        <button className="operacao-button">/</button>
                     </div>
                 </div>
-                
+                <button className="display">=</button>
             </div>
         );
     }
