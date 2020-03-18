@@ -7,6 +7,7 @@ import './styles.css';
 export default class Calculator extends Component {
     state = {
         valorDisplay: '',
+        resultado: 0,
         operacoes: [],
         valores: []
     }
@@ -15,12 +16,38 @@ export default class Calculator extends Component {
         let { valorDisplay } = this.state;
         valorDisplay += valor;
         await this.setState({ valorDisplay });
-        console.log(this.state.valorDisplay);
     }
 
-    handleOperacao = (operacao, valor) => {
+    handleOperacao = async (operacao) => {
+        let { operacoes, valores, valorDisplay } = this.state;
+
         switch(operacao) {
             case '+':
+                operacoes.push(operacao);
+                valores.push(parseFloat(valorDisplay));
+
+                await this.setState({ operacoes, valores, valorDisplay: '' });
+            break;
+            case '-':
+                operacoes.push(operacao);
+                valores.push(parseFloat(valorDisplay));
+
+                await this.setState({ operacoes, valores, valorDisplay: '' });
+            break;
+            case '=':
+                valores.push(parseFloat(valorDisplay));
+                let resultado = 0;
+
+                await valores.forEach((valor, index) => {
+                    if(index === 0) resultado = valor;
+
+                    else if(operacoes[index - 1] === '+') resultado += valor;
+
+                    else if(operacoes[index - 1] === '-') resultado -= valor;
+
+
+                });
+                await this.setState({ resultado, valorDisplay: resultado });        
             break;
         }
     }
@@ -46,11 +73,11 @@ export default class Calculator extends Component {
                     <BotaoNumerico onClick={() => this.handleNumClick('1')} valor={1}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('2')} valor={2}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('3')} valor={3}/>
-                    <BotaoOperacao valor={'-'}/>
+                    <BotaoOperacao onClick={() => this.handleOperacao('-')} valor={'-'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('0')} valor={0}/>
                     <BotaoOperacao valor={'.'}/>
-                    <BotaoOperacao valor={'='}/>
-                    <BotaoOperacao valor={'+'}/>     
+                    <BotaoOperacao onClick={() => this.handleOperacao('=')} valor={'='}/>
+                    <BotaoOperacao onClick={() => this.handleOperacao('+')} valor={'+'}/>     
                 </div>
             </div>
         );
