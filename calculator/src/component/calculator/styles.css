@@ -3,13 +3,6 @@ div .form-calculadora {
     width: 700px;
 }
 
-div .display {
-    width: 50%;
-    border: 1px;
-    border-style: solid;
-    font-weight: bold;
-}
-
 div .teclado {
     width: 100%;
     display: flex;
@@ -20,11 +13,6 @@ div .teclado-numerico {
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-}
-
-div button{
-    padding: 15px;
-    width: 33.3%;
 }
 
 div.last-item {
@@ -42,15 +30,11 @@ div.teclado-operacao {
     flex-direction: column;
 }
 
-button.operacao-button {
-    width: 100%;
+button.calcular {
+    width: 50%;
 }
 
-div.last-operaction {
-    width: 700px;
-    background: red;
-}
-
-button.last-operacao-button {
+button {
+    padding: 15px;
     width: 100%;
 }
