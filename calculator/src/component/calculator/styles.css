@@ -1,40 +1,4 @@
 div .form-calculadora {
-    height: 300px;
-    width: 700px;
-}
-
-div .teclado {
-    width: 100%;
-    display: flex;
-}
-
-div .teclado-numerico {
-    width: 35%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-div.last-item {
-    flex: 1;
-}
-
-button.last-button {
-    width: 100%;
-    height: 100%;
-}
-
-div.teclado-operacao {
-    width: 15%;
-    display: flex;
-    flex-direction: column;
-}
-
-button.calcular {
-    width: 50%;
-}
-
-button {
-    padding: 15px;
-    width: 100%;
+    height: 600px;
+    width: 30%;
 }

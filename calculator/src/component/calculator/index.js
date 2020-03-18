@@ -27,29 +27,27 @@ export default class Calculator extends Component {
             <div className="form-calculadora">
                 <Display valor={valorDisplay}/>
                 <div className="teclado">
-                    <div className="teclado-numerico">
-                        <BotaoNumerico onClick={() => this.handleNumClick(1)} valor={1}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(2)} valor={2}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(3)} valor={3}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(4)} valor={4}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(5)} valor={5}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(6)} valor={6}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(7)} valor={7}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(8)} valor={8}/>
-                        <BotaoNumerico onClick={() => this.handleNumClick(9)} valor={9}/>
-                        <div className="last-item">
-                            <button  className="last-button" onClick={() => this.handleNumClick(0)}>0</button>
-                        </div>
-                    </div>
-                    
-                    <div className="teclado-operacao">
-                        <BotaoOperacao onClick={() => this.handleOperacao('+')} valor={'+'}/>
-                        <BotaoOperacao valor={'-'}/>
-                        <BotaoOperacao valor={'*'}/>
-                        <BotaoOperacao valor={'/'}/>
-                    </div>
+                    <BotaoOperacao valor={'('}/>
+                    <BotaoOperacao valor={')'}/>
+                    <BotaoOperacao valor={'%'}/>
+                    <BotaoOperacao valor={'AC'}/>
+                    <BotaoNumerico valor={7}/>
+                    <BotaoNumerico valor={8}/>
+                    <BotaoNumerico valor={9}/>
+                    <BotaoOperacao valor={'/'}/>
+                    <BotaoNumerico valor={4}/>
+                    <BotaoNumerico valor={5}/>
+                    <BotaoNumerico valor={6}/>
+                    <BotaoOperacao valor={'*'}/>
+                    <BotaoNumerico valor={1}/>
+                    <BotaoNumerico valor={2}/>
+                    <BotaoNumerico valor={3}/>
+                    <BotaoOperacao valor={'-'}/>
+                    <BotaoNumerico valor={0}/>
+                    <BotaoOperacao valor={'.'}/>
+                    <BotaoOperacao valor={'='}/>
+                    <BotaoOperacao valor={'+'}/>     
                 </div>
-                <button className="calcular">=</button>
             </div>
         );
     }
