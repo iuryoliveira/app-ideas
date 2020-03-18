@@ -7,7 +7,7 @@ export default class Display extends Component {
 
         return (
             <div className="display">
-                <label>{valor}</label>
+                <label>{valor ? valor : '0'}</label>
             </div>
         );
     }
