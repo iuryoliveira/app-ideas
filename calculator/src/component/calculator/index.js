@@ -13,8 +13,10 @@ export default class Calculator extends Component {
 
     handleNumClick = async (valor) => {
         let { valorDisplay } = this.state;
-        valorDisplay += valor;
-        await this.setState({ valorDisplay });
+        if(valorDisplay.length < 8) {
+            valorDisplay += valor;
+            await this.setState({ valorDisplay });
+        }
     }
 
     salvarOperacao = async (operacao) => {
