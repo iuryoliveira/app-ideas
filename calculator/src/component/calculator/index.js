@@ -18,38 +18,42 @@ export default class Calculator extends Component {
         await this.setState({ valorDisplay });
     }
 
-    handleOperacao = async (operacao) => {
+    salvarOperacao = async (operacao) => {
         let { operacoes, valores, valorDisplay } = this.state;
+        operacoes.push(operacao);
+        valores.push(parseFloat(valorDisplay));
+        await this.setState({ operacoes, valores, valorDisplay: '' });
+    }
 
-        switch(operacao) {
-            case '+':
-                operacoes.push(operacao);
-                valores.push(parseFloat(valorDisplay));
+    calcularResultado = async () => {
+        let { operacoes, valores, valorDisplay } = this.state;
+        let resultado = 0
 
-                await this.setState({ operacoes, valores, valorDisplay: '' });
-            break;
-            case '-':
-                operacoes.push(operacao);
-                valores.push(parseFloat(valorDisplay));
+        valores.push(parseFloat(valorDisplay));
 
-                await this.setState({ operacoes, valores, valorDisplay: '' });
-            break;
-            case '=':
-                valores.push(parseFloat(valorDisplay));
-                let resultado = 0;
+        await valores.forEach( async (valor, index) => {
+            if(index === 0) resultado = valor;
 
-                await valores.forEach((valor, index) => {
-                    if(index === 0) resultado = valor;
+            else if(operacoes[index - 1] === '+') resultado += valor;
 
-                    else if(operacoes[index - 1] === '+') resultado += valor;
+            else if(operacoes[index - 1] === '-') resultado -= valor;
 
-                    else if(operacoes[index - 1] === '-') resultado -= valor;
+            else if(operacoes[index - 1] === '*') resultado *= valor;
 
+            else if(operacoes[index - 1] === '/') resultado /= valor;
+        });
+        await this.setState({ resultado, valorDisplay: resultado });     
+    }
 
-                });
-                await this.setState({ resultado, valorDisplay: resultado });        
-            break;
-        }
+    handleOperacao = async (operacao) => {
+        await this.salvarOperacao(operacao);
+    }
+
+    handlePercentual = async() => {
+        let { valorDisplay } = this.state;
+        valorDisplay *= 0.01;
+
+        await this.setState({ valorDisplay });
     }
 
     render() {
@@ -60,23 +64,23 @@ export default class Calculator extends Component {
                 <div className="teclado">
                     <BotaoOperacao valor={'('}/>
                     <BotaoOperacao valor={')'}/>
-                    <BotaoOperacao valor={'%'}/>
+                    <BotaoOperacao onClick={() => this.handlePercentual()} valor={'%'}/>
                     <BotaoOperacao valor={'AC'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('7')} valor={7}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('8')}valor={8}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('9')}valor={9}/>
-                    <BotaoOperacao valor={'/'}/>
+                    <BotaoNumerico onClick={() => this.handleNumClick('8')} valor={8}/>
+                    <BotaoNumerico onClick={() => this.handleNumClick('9')} valor={9}/>
+                    <BotaoOperacao onClick={() => this.handleOperacao('/')} valor={'/'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('4')} valor={4}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('5')} valor={5}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('6')} valor={6}/>
-                    <BotaoOperacao valor={'*'}/>
+                    <BotaoOperacao onClick={() => this.handleOperacao('*')} valor={'*'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('1')} valor={1}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('2')} valor={2}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('3')} valor={3}/>
                     <BotaoOperacao onClick={() => this.handleOperacao('-')} valor={'-'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('0')} valor={0}/>
-                    <BotaoOperacao valor={'.'}/>
-                    <BotaoOperacao onClick={() => this.handleOperacao('=')} valor={'='}/>
+                    <BotaoOperacao onClick={() => this.handleNumClick('.')} valor={'.'}/>
+                    <BotaoOperacao onClick={() => this.calcularResultado()} valor={'='}/>
                     <BotaoOperacao onClick={() => this.handleOperacao('+')} valor={'+'}/>     
                 </div>
             </div>
