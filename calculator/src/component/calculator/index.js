@@ -7,7 +7,6 @@ import './styles.css';
 export default class Calculator extends Component {
     state = {
         valorDisplay: '',
-        resultado: 0,
         operacoes: [],
         valores: []
     }
@@ -27,7 +26,7 @@ export default class Calculator extends Component {
 
     calcularResultado = async () => {
         let { operacoes, valores, valorDisplay } = this.state;
-        let resultado = 0
+        let resultado = 0;
 
         valores.push(parseFloat(valorDisplay));
 
@@ -42,7 +41,8 @@ export default class Calculator extends Component {
 
             else if(operacoes[index - 1] === '/') resultado /= valor;
         });
-        await this.setState({ resultado, valorDisplay: resultado });     
+
+        await this.setState({ operacoes: [], valores: [], valorDisplay: resultado });   
     }
 
     handleOperacao = async (operacao) => {
