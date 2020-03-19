@@ -8,7 +8,8 @@ export default class Calculator extends Component {
     state = {
         valorDisplay: '',
         operacoes: [],
-        valores: []
+        valores: [],
+        resultadoParcial: '',
     }
 
     handleNumClick = async (valor) => {
@@ -68,14 +69,33 @@ export default class Calculator extends Component {
         await this.setState({ valorDisplay: '' });
     }
 
+    handleCalculoTemporario = async () => {
+        let { operacoes, valores, valorDisplay } = this.state;
+        let resultParcial = 0;
+        
+        valores.push(parseFloat(valorDisplay));
+
+        if(operacoes[valores.length - 2] === '+') resultParcial = valores[valores.length - 2] + valores[valores.length - 1];
+        else if(operacoes[valores.length - 2] === '-') resultParcial = valores[valores.length - 2] - valores[valores.length - 1];
+        else if(operacoes[valores.length - 2] === '*') resultParcial = valores[valores.length - 2] * valores[valores.length - 1];
+        else if(operacoes[valores.length - 2] === '/') resultParcial = valores[valores.length - 2] / valores[valores.length - 1];
+
+        await this.setState({ resultadoParcial: resultParcial });
+
+        setTimeout(() => {
+            this.setState({ resultadoParcial: '', valorDisplay })
+        }, 2000);
+        
+    }
+
     render() {
-        const { valorDisplay } = this.state;
+        const { valorDisplay, resultadoParcial } = this.state;
         return (
             <div className="form-calculadora">
-                <Display valor={valorDisplay}/>
+                <Display valor={resultadoParcial ? resultadoParcial : valorDisplay}/>
                 <div className="teclado">
                     <BotaoOperacao onClick={() => this.handeLimparUltimoNumero()} valor={'C'}/>
-                    <BotaoOperacao valor={')'}/>
+                    <BotaoOperacao onClick={() => this.handleCalculoTemporario()}valor={'OP'}/>
                     <BotaoOperacao onClick={() => this.handlePercentual()} valor={'%'}/>
                     <BotaoOperacao onClick={() => this.handleLimparTudo()} valor={'AC'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('7')} valor={7}/>
