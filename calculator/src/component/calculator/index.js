@@ -62,13 +62,17 @@ export default class Calculator extends Component {
         await this.setState({ operacoes: [], valores: [], valorDisplay: '' });   
     }
 
+    handeLimparUltimoNumero = async () => {
+        await this.setState({ valorDisplay: '' });
+    }
+
     render() {
         const { valorDisplay } = this.state;
         return (
             <div className="form-calculadora">
                 <Display valor={valorDisplay}/>
                 <div className="teclado">
-                    <BotaoOperacao valor={'('}/>
+                    <BotaoOperacao onClick={() => this.handeLimparUltimoNumero()} valor={'C'}/>
                     <BotaoOperacao valor={')'}/>
                     <BotaoOperacao onClick={() => this.handlePercentual()} valor={'%'}/>
                     <BotaoOperacao onClick={() => this.handleLimparTudo()} valor={'AC'}/>
