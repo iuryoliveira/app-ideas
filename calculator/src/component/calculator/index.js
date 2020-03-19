@@ -19,9 +19,11 @@ export default class Calculator extends Component {
 
     salvarOperacao = async (operacao) => {
         let { operacoes, valores, valorDisplay } = this.state;
-        operacoes.push(operacao);
-        valores.push(parseFloat(valorDisplay));
-        await this.setState({ operacoes, valores, valorDisplay: '' });
+        if(valorDisplay != '') {
+            operacoes.push(operacao);
+            valores.push(parseFloat(valorDisplay));
+            await this.setState({ operacoes, valores, valorDisplay: '' });
+        } 
     }
 
     calcularResultado = async () => {
@@ -56,6 +58,10 @@ export default class Calculator extends Component {
         await this.setState({ valorDisplay });
     }
 
+    handleLimparTudo = async() => {
+        await this.setState({ operacoes: [], valores: [], valorDisplay: '' });   
+    }
+
     render() {
         const { valorDisplay } = this.state;
         return (
@@ -65,7 +71,7 @@ export default class Calculator extends Component {
                     <BotaoOperacao valor={'('}/>
                     <BotaoOperacao valor={')'}/>
                     <BotaoOperacao onClick={() => this.handlePercentual()} valor={'%'}/>
-                    <BotaoOperacao valor={'AC'}/>
+                    <BotaoOperacao onClick={() => this.handleLimparTudo()} valor={'AC'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('7')} valor={7}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('8')} valor={8}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('9')} valor={9}/>
