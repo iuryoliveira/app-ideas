@@ -12,7 +12,7 @@ export default class Calculator extends Component {
         ultimoNumero: 0,
     }
 
-    handleNumClick = async (valor) => {
+    handleClickNumerico = async (valor) => {
         let { valorDisplay } = this.state;
         if(valorDisplay.length < 8) {
             valorDisplay += valor;
@@ -22,7 +22,7 @@ export default class Calculator extends Component {
 
     salvarOperacao = async (operacao) => {
         let { operacoes, valorDisplay, resultadoParcial, ultimoNumero } = this.state;
-        if(valorDisplay != '') {
+        if(valorDisplay !== '') {
 
             operacoes.push(operacao);
 
@@ -104,20 +104,20 @@ export default class Calculator extends Component {
                     <BotaoOperacao onClick={() => this.calculoParcial()}valor={'OP'}/>
                     <BotaoOperacao onClick={() => this.handlePercentual()} valor={'%'}/>
                     <BotaoOperacao onClick={() => this.handleLimparTudo()} valor={'AC'}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('7')} valor={7}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('8')} valor={8}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('9')} valor={9}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('7')} valor={7}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('8')} valor={8}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('9')} valor={9}/>
                     <BotaoOperacao onClick={() => this.handleOperacao('/')} valor={'/'}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('4')} valor={4}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('5')} valor={5}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('6')} valor={6}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('4')} valor={4}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('5')} valor={5}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('6')} valor={6}/>
                     <BotaoOperacao onClick={() => this.handleOperacao('*')} valor={'*'}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('1')} valor={1}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('2')} valor={2}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('3')} valor={3}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('1')} valor={1}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('2')} valor={2}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('3')} valor={3}/>
                     <BotaoOperacao onClick={() => this.handleOperacao('-')} valor={'-'}/>
-                    <BotaoNumerico onClick={() => this.handleNumClick('0')} valor={0}/>
-                    <BotaoOperacao onClick={() => this.handleNumClick('.')} valor={'.'}/>
+                    <BotaoNumerico onClick={() => this.handleClickNumerico('0')} valor={0}/>
+                    <BotaoOperacao onClick={() => this.handleClickNumerico('.')} valor={'.'}/>
                     <BotaoOperacao onClick={() => this.calcularResultado()} valor={'='}/>
                     <BotaoOperacao onClick={() => this.handleOperacao('+')} valor={'+'}/>     
                 </div>
