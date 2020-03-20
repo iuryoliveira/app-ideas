@@ -37,10 +37,7 @@ export default class Calculator extends Component {
             if(operacoes.length === 1) {
                 resultadoParcial = parseFloat(valorDisplay);
             } else if(operacoes.length > 1) {
-                if(operacoes[operacoes.length - 2] === '+') resultadoParcial += valores[valores.length - 1];
-                else if(operacoes[operacoes.length - 2] === '-') resultadoParcial -= valores[valores.length - 1];
-                else if(operacoes[operacoes.length - 2] === '*') resultadoParcial *= valores[valores.length - 1];
-                else if(operacoes[operacoes.length - 2] === '/') resultadoParcial /= valores[valores.length - 1];
+                resultadoParcial = this.calcularOperacao(operacoes[operacoes.length - 2], resultadoParcial, ultimoNumero);
             }
 
             await this.setState({ operacoes, valores, valorDisplay: '', resultadoParcial, operacaoParcialRealizada: false });
@@ -50,35 +47,42 @@ export default class Calculator extends Component {
     calcularResultado = async () => {
         let { operacoes, valores, valorDisplay, resultadoParcial } = this.state;
         
+        let ultimaOperacao = operacoes[operacoes.length - 1];
+
         let ultimoValor = parseFloat(valorDisplay);
         valores.push(ultimoValor);
 
-        if(operacoes[operacoes.length - 1] === '+') resultadoParcial += ultimoValor;
-
-        else if(operacoes[operacoes.length - 1] === '-') resultadoParcial -= ultimoValor;
-
-        else if(operacoes[operacoes.length - 1] === '*') resultadoParcial *= ultimoValor;
-
-        else if(operacoes[operacoes.length - 1] === '/') resultadoParcial /= ultimoValor;
+        resultadoParcial = this.calcularOperacao(ultimaOperacao, resultadoParcial, ultimoValor);
 
         await this.setState({ operacoes: [], valores: [], valorDisplay: resultadoParcial, resultadoParcial });   
     }
 
     calculoParcial = async () => {
-        let { valores, operacoes, valorDisplay, resultadoParcial, ultimoNumero} = this.state;
-        
+        let { valores, operacoes, valorDisplay, resultadoParcial } = this.state;
+
+        let ultimaOperacao = operacoes[operacoes.length - 1];
+
         if (valores.length > 0 && operacoes.length > 0) {
             let valorTemporario = parseFloat(valorDisplay);
 
-            if(operacoes[operacoes.length - 1] === '+') resultadoParcial += valorTemporario;
-
-            else if(operacoes[operacoes.length - 1] === '-') resultadoParcial -= valorTemporario;
-
-            else if(operacoes[operacoes.length - 1] === '*') resultadoParcial *= valorTemporario;
-
-            else if(operacoes[operacoes.length - 1] === '/') resultadoParcial /= valorTemporario;
+            resultadoParcial = this.calcularOperacao(ultimaOperacao, resultadoParcial, valorTemporario);
 
             await this.setState({ valorDisplay: resultadoParcial, operacaoParcialRealizada: true, ultimoNumero: valorTemporario });
+        }
+    }
+
+    calcularOperacao = (operacao, totalizador, valor) => {
+        switch(operacao) {
+            case '+':
+                return totalizador + valor;
+            case '-':
+                return totalizador - valor;
+            case '*':
+                return totalizador * valor;
+            case '/':
+                return totalizador / valor;
+            default:
+                break;
         }
     }
 
