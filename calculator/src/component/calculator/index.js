@@ -9,7 +9,9 @@ export default class Calculator extends Component {
         valorDisplay: '',
         operacoes: [],
         valores: [],
-        resultadoParcial: '',
+        resultadoParcial: 0,
+        operacaoParcialRealizada: false,
+        ultimoNumero: 0,
     }
 
     handleNumClick = async (valor) => {
@@ -21,33 +23,63 @@ export default class Calculator extends Component {
     }
 
     salvarOperacao = async (operacao) => {
-        let { operacoes, valores, valorDisplay } = this.state;
+        let { operacoes, valores, valorDisplay, resultadoParcial, operacaoParcialRealizada, ultimoNumero } = this.state;
         if(valorDisplay != '') {
+
             operacoes.push(operacao);
-            valores.push(parseFloat(valorDisplay));
-            await this.setState({ operacoes, valores, valorDisplay: '' });
+
+            if(!operacaoParcialRealizada) {
+                valores.push(parseFloat(valorDisplay));
+            } else {
+                valores.push(ultimoNumero);
+            }
+
+            if(operacoes.length === 1) {
+                resultadoParcial = parseFloat(valorDisplay);
+            } else if(operacoes.length > 1) {
+                if(operacoes[operacoes.length - 2] === '+') resultadoParcial += valores[valores.length - 1];
+                else if(operacoes[operacoes.length - 2] === '-') resultadoParcial -= valores[valores.length - 1];
+                else if(operacoes[operacoes.length - 2] === '*') resultadoParcial *= valores[valores.length - 1];
+                else if(operacoes[operacoes.length - 2] === '/') resultadoParcial /= valores[valores.length - 1];
+            }
+
+            await this.setState({ operacoes, valores, valorDisplay: '', resultadoParcial, operacaoParcialRealizada: false });
         } 
     }
 
     calcularResultado = async () => {
-        let { operacoes, valores, valorDisplay } = this.state;
-        let resultado = 0;
+        let { operacoes, valores, valorDisplay, resultadoParcial } = this.state;
+        
+        let ultimoValor = parseFloat(valorDisplay);
+        valores.push(ultimoValor);
 
-        valores.push(parseFloat(valorDisplay));
+        if(operacoes[operacoes.length - 1] === '+') resultadoParcial += ultimoValor;
 
-        await valores.forEach( async (valor, index) => {
-            if(index === 0) resultado = valor;
+        else if(operacoes[operacoes.length - 1] === '-') resultadoParcial -= ultimoValor;
 
-            else if(operacoes[index - 1] === '+') resultado += valor;
+        else if(operacoes[operacoes.length - 1] === '*') resultadoParcial *= ultimoValor;
 
-            else if(operacoes[index - 1] === '-') resultado -= valor;
+        else if(operacoes[operacoes.length - 1] === '/') resultadoParcial /= ultimoValor;
 
-            else if(operacoes[index - 1] === '*') resultado *= valor;
+        await this.setState({ operacoes: [], valores: [], valorDisplay: resultadoParcial, resultadoParcial });   
+    }
 
-            else if(operacoes[index - 1] === '/') resultado /= valor;
-        });
+    calculoParcial = async () => {
+        let { valores, operacoes, valorDisplay, resultadoParcial, ultimoNumero} = this.state;
+        
+        if (valores.length > 0 && operacoes.length > 0) {
+            let valorTemporario = parseFloat(valorDisplay);
 
-        await this.setState({ operacoes: [], valores: [], valorDisplay: resultado });   
+            if(operacoes[operacoes.length - 1] === '+') resultadoParcial += valorTemporario;
+
+            else if(operacoes[operacoes.length - 1] === '-') resultadoParcial -= valorTemporario;
+
+            else if(operacoes[operacoes.length - 1] === '*') resultadoParcial *= valorTemporario;
+
+            else if(operacoes[operacoes.length - 1] === '/') resultadoParcial /= valorTemporario;
+
+            await this.setState({ valorDisplay: resultadoParcial, operacaoParcialRealizada: true, ultimoNumero: valorTemporario });
+        }
     }
 
     handleOperacao = async (operacao) => {
@@ -62,40 +94,21 @@ export default class Calculator extends Component {
     }
 
     handleLimparTudo = async() => {
-        await this.setState({ operacoes: [], valores: [], valorDisplay: '' });   
+        await this.setState({ operacoes: [], valores: [], valorDisplay: '', resultadoParcial: 0 });   
     }
 
     handeLimparUltimoNumero = async () => {
         await this.setState({ valorDisplay: '' });
     }
 
-    handleCalculoTemporario = async () => {
-        let { operacoes, valores, valorDisplay } = this.state;
-        let resultParcial = 0;
-        
-        valores.push(parseFloat(valorDisplay));
-
-        if(operacoes[valores.length - 2] === '+') resultParcial = valores[valores.length - 2] + valores[valores.length - 1];
-        else if(operacoes[valores.length - 2] === '-') resultParcial = valores[valores.length - 2] - valores[valores.length - 1];
-        else if(operacoes[valores.length - 2] === '*') resultParcial = valores[valores.length - 2] * valores[valores.length - 1];
-        else if(operacoes[valores.length - 2] === '/') resultParcial = valores[valores.length - 2] / valores[valores.length - 1];
-
-        await this.setState({ resultadoParcial: resultParcial });
-
-        setTimeout(() => {
-            this.setState({ resultadoParcial: '', valorDisplay })
-        }, 2000);
-        
-    }
-
     render() {
-        const { valorDisplay, resultadoParcial } = this.state;
+        const { valorDisplay } = this.state;
         return (
             <div className="form-calculadora">
-                <Display valor={resultadoParcial ? resultadoParcial : valorDisplay}/>
+                <Display valor={valorDisplay}/>
                 <div className="teclado">
                     <BotaoOperacao onClick={() => this.handeLimparUltimoNumero()} valor={'C'}/>
-                    <BotaoOperacao onClick={() => this.handleCalculoTemporario()}valor={'OP'}/>
+                    <BotaoOperacao onClick={() => this.calculoParcial()}valor={'OP'}/>
                     <BotaoOperacao onClick={() => this.handlePercentual()} valor={'%'}/>
                     <BotaoOperacao onClick={() => this.handleLimparTudo()} valor={'AC'}/>
                     <BotaoNumerico onClick={() => this.handleNumClick('7')} valor={7}/>
