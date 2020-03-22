@@ -1,13 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import ColorInputBox from './components/colorInputBox';
+import ColorInput from './components/colorInput';
+import ColorBox from './components/colorBox';
 
-function App() {
-  return (
-    <div className="App">
-      <ColorInputBox />
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    colors: {
+      red: 'FF',
+      green: 'FF',
+      blue: 'FF'
+    }
+  }
+
+  handleRedChange = async (event) => {
+    let value = event.value;
+    await this.setState({ red: value });
+  }
+
+  handleGreenChange = async (event) => {
+    let value = event.value;
+    await this.setState({ green: value });
+  }
+
+  handleBlueChange = async (event) => {
+    let value = event.value;
+    await this.setState({ blue: value });
+  }
+
+  render() {
+    const { colors: { red, green, blue}, colors } = this.state;
+
+    return (
+      <div className="App">
+        <ColorInput color="Red" onChange={(e) => this.handleRedChange(e)} value={red}/>
+        <ColorInput color="Green" onChange={(e) => this.handleGreenChange(e)} value={green}/>
+        <ColorInput color="Blue" onChange={(e) => this.handleBlueChange(e)} value={blue}/>
+        <ColorBox colors={colors}/>
+      </div>
+    );
+  }
 }
-
-export default App;
