@@ -6,5 +6,5 @@ export const Div = styled.div`
   height: 200px;
   padding: 10px;
   border: 2px;
-  background-color: lightblue;
+  background-color: ${props => `#${props.colors.red + props.colors.green + props.colors.blue}`}
 `;

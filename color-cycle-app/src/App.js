@@ -7,8 +7,8 @@ export default class App extends Component {
   state = {
     colors: {
       red: 'FF',
-      green: 'FF',
-      blue: 'FF'
+      green: '00',
+      blue: '00'
     }
   }
 

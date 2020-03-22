@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { Div } from './styles';
 
 export default class ColorBox extends Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props);
-  }
   render() {
+    const { colors } = this.props;
     return(
-      <Div></Div>
+      <Div colors={colors}></Div>
     );
   }
 }
