@@ -7,20 +7,4 @@ export const HeaderList = styled.ul`
   padding: 0px;
   width: 50%;
   background-color: #f1f1f1;
-
-  li {
-    width: 100%;
-  }
-
-  a {
-    display: block;
-    color: #000;
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-
-  a:hover {
-    background-color: #555;
-    color: white;
-  }
 `

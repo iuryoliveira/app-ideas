@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Article from './components/article';
+import ListItem from './components/listItem';
 
 import { HeaderList } from './styles';
 
@@ -29,12 +30,12 @@ export default class App extends Component {
       }
     ],
 
-    selectedPerson: 0
+    selectedPerson: 0,
   };
 
   handleSelection = async (data, position) => {
     console.log(`loading data for ${data.name}`);
-    await this.setState({ selectedPerson: position })
+    await this.setState({ selectedPerson: position });
   }
 
   render() {
@@ -46,7 +47,7 @@ export default class App extends Component {
           <h1>ReactJS</h1>
           <HeaderList>
             {people.map((data, i) => {
-              return (<li key={i} onClick={() => this.handleSelection(data, i)}><a href='./#'>{data.name}</a></li>)
+              return <ListItem key={i} position={i} data={data} onClick={() => this.handleSelection(data, i)}/>
             })}
           </HeaderList>
         </center>
