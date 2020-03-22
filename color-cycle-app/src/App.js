@@ -13,29 +13,35 @@ export default class App extends Component {
   }
 
   handleRedChange = async (event) => {
-    let value = event.value;
-    await this.setState({ red: value });
+    let colors = this.state.colors;
+    colors.red = event.target.value;
+
+    await this.setState({ colors });
   }
 
   handleGreenChange = async (event) => {
-    let value = event.value;
-    await this.setState({ green: value });
+    let colors = this.state.colors;
+    colors.green = event.target.value;
+
+    await this.setState({ colors });
   }
 
   handleBlueChange = async (event) => {
-    let value = event.value;
-    await this.setState({ blue: value });
+    let colors = this.state.colors;
+    colors.blue = event.target.value;
+
+    await this.setState({ colors });
   }
 
   render() {
-    const { colors: { red, green, blue}, colors } = this.state;
+    const { red, green, blue } = this.state.colors;
 
     return (
       <div className="App">
         <ColorInput color="Red" onChange={(e) => this.handleRedChange(e)} value={red}/>
         <ColorInput color="Green" onChange={(e) => this.handleGreenChange(e)} value={green}/>
         <ColorInput color="Blue" onChange={(e) => this.handleBlueChange(e)} value={blue}/>
-        <ColorBox colors={colors}/>
+        <ColorBox colors={this.state.colors}/>
       </div>
     );
   }
