@@ -47,7 +47,11 @@ export default class App extends Component {
           <h1>ReactJS</h1>
           <HeaderList>
             {people.map((data, i) => {
-              return <ListItem key={i} position={i} data={data} onClick={() => this.handleSelection(data, i)}/>
+              return (
+                <ListItem key={i} position={i} data={data}
+                onClick={() => this.handleSelection(data, i)}
+                isSelected={selectedPerson === i ? true : false}/>
+              )
             })}
           </HeaderList>
         </center>

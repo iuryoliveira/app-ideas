@@ -5,7 +5,7 @@ export const ListItemStyle = styled.li `
 
   a {
     display: block;
-    color: #000;
+    color: ${props => props.isSelected ? 'red' : '#000'};
     padding: 8px 16px;
     text-decoration: none;
   }
