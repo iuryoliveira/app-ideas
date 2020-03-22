@@ -10,22 +10,22 @@ export default class App extends Component {
         name: 'Iury Oliveira',
         street: 'Euclides da Cunha',
         country: 'Brazil',
-        telephone: '55-(31)99999-5555',
-        birthDay: '08/05/1997'
+        telephone: '(31)99999-5555',
+        birthDate: '08/05/1997'
       },
       {
         name: 'Phil Collins',
         street: 'Georgy Street',
         country: 'USA',
-        telephone: '5599999-5555',
-        birthDay: '24/05/1997'
+        telephone: '(31)99999-5555',
+        birthDate: '24/05/1997'
       },
       {
         name: 'George Silva',
         street: 'Paul Boutcosta',
         country: 'Brazil',
-        telephone: '55-(31)95555-9999',
-        birthDay: '09/05/1995'
+        telephone: '(31)95555-9999',
+        birthDate: '09/05/1995'
       }
     ],
 

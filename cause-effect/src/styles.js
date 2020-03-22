@@ -5,8 +5,12 @@ export const HeaderList = styled.ul`
   list-style-type: none;
   margin: 0px;
   padding: 0px;
-  width: 200px;
+  width: 50%;
   background-color: #f1f1f1;
+
+  li {
+    width: 100%;
+  }
 
   a {
     display: block;
