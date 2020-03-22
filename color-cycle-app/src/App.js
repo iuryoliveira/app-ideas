@@ -1,9 +1,11 @@
 import React from 'react';
 
+import ColorInputBox from './components/colorInputBox';
+
 function App() {
   return (
     <div className="App">
-      Color cycle app
+      <ColorInputBox />
     </div>
   );
 }
