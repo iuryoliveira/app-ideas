@@ -9,7 +9,10 @@ export default class App extends Component {
       red: 'FF',
       green: '00',
       blue: '00'
-    }
+    },
+
+    started: false,
+    interval: null,
   }
 
   handleRedChange = async (event) => {
@@ -33,15 +36,32 @@ export default class App extends Component {
     await this.setState({ colors });
   }
 
+  handleColorChange = async () => {
+    let started = !this.state.started;
+    await this.setState({ started });
+
+    if(started) {
+      let interval = setInterval(() => console.log('rodando'), 250);
+      await this.setState({ interval });
+    } else {
+      clearInterval(this.state.interval);
+      await this.setState({ interval: null })
+    }
+  }
+
   render() {
-    const { red, green, blue } = this.state.colors;
+    const { colors: { red, green, blue }, colors, started  } = this.state;
 
     return (
       <div className="App">
         <ColorInput color="Red" onChange={(e) => this.handleRedChange(e)} value={red}/>
         <ColorInput color="Green" onChange={(e) => this.handleGreenChange(e)} value={green}/>
         <ColorInput color="Blue" onChange={(e) => this.handleBlueChange(e)} value={blue}/>
-        <ColorBox colors={this.state.colors}/>
+        <ColorBox colors={colors}/>
+        <center>
+          <button onClick={() => this.handleColorChange()}>{started ? 'Stop' : 'Start'}</button>
+        </center>
+
       </div>
     );
   }
