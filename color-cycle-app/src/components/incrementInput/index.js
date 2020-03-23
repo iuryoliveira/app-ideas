@@ -7,7 +7,7 @@ export default class IncrementInput extends Component {
 
     return(
       <Div>
-        <label>Increment</label><input type="text" maxLength={2} onChange={onChange} value={value}/>
+        <label>Increment</label><input type="text" maxLength={3} onChange={onChange} value={value}/>
       </Div>
     );
   }
