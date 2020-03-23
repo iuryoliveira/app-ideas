@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import ColorInput from './components/colorInput';
 import ColorBox from './components/colorBox';
+import StartButton from './components/startButton';
 
 export default class App extends Component {
   state = {
@@ -57,11 +58,10 @@ export default class App extends Component {
         <ColorInput color="Red" onChange={(e) => this.handleRedChange(e)} value={red}/>
         <ColorInput color="Green" onChange={(e) => this.handleGreenChange(e)} value={green}/>
         <ColorInput color="Blue" onChange={(e) => this.handleBlueChange(e)} value={blue}/>
-        <ColorBox colors={colors}/>
-        <center>
-          <button onClick={() => this.handleColorChange()}>{started ? 'Stop' : 'Start'}</button>
-        </center>
 
+        <ColorBox colors={colors}/>
+
+        <StartButton started={started} onClick={() => this.handleColorChange()} />
       </div>
     );
   }
