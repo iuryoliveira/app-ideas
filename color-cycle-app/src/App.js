@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ColorInput from './components/colorInput';
 import ColorBox from './components/colorBox';
 import StartButton from './components/startButton';
+import IncrementInput from './components/incrementInput';
 
 export default class App extends Component {
   state = {
@@ -14,6 +15,7 @@ export default class App extends Component {
 
     started: false,
     interval: null,
+    incrementValue: 0
   }
 
   handleRedChange = async (event) => {
@@ -42,7 +44,7 @@ export default class App extends Component {
     await this.setState({ started });
 
     if(started) {
-      let interval = setInterval(() => console.log('rodando'), 250);
+      let interval = setInterval(() => console.log(`Acrescentando + ${this.state.incrementValue}`), 250);
       await this.setState({ interval });
     } else {
       clearInterval(this.state.interval);
@@ -50,8 +52,13 @@ export default class App extends Component {
     }
   }
 
+  handleIncrementInput = async (event) => {
+    let incrementValue = event.target.value;
+    await this.setState({ incrementValue });
+  }
+
   render() {
-    const { colors: { red, green, blue }, colors, started  } = this.state;
+    const { colors: { red, green, blue }, colors, started, incrementValue } = this.state;
 
     return (
       <div className="App">
@@ -60,7 +67,7 @@ export default class App extends Component {
         <ColorInput color="Blue" onChange={(e) => this.handleBlueChange(e)} value={blue}/>
 
         <ColorBox colors={colors}/>
-
+        <IncrementInput onChange={(e) => this.handleIncrementInput(e)} value={incrementValue}/>
         <StartButton started={started} onClick={() => this.handleColorChange()} />
       </div>
     );
