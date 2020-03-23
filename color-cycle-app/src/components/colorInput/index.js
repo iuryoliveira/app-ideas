@@ -7,7 +7,7 @@ export default class ColorInput extends Component {
 
     return(
       <Div>
-        <label>{color}</label><input type="text" onChange={onChange} value={value}/>
+        <label>{color}</label><input type="text" maxLength={2} onChange={onChange} value={value}/>
       </Div>
     );
   }
