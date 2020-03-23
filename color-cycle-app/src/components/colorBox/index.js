@@ -3,25 +3,26 @@ import { Div } from './styles';
 
 export default class ColorBox extends Component {
   state = {
-    colors: this.props.colors
+    colors: this.props.colors,
+    colorsRgb: this.props.colorsRgb,
+    useRgb: this.props.useRgb
   }
 
   componentDidUpdate(prevProps) {
-    let prev = JSON.stringify(prevProps);
-    let props = JSON.stringify(this.props);
-    if(prev != props) {
+    if(prevProps != this.props) {
       this.updateAndNotify();
     }
   }
 
   updateAndNotify = async () => {
-    await this.setState({ colors: this.props });
+    await this.setState({ colors: this.props.colors, colorsRgb: this.props.colorsRgb,
+    useRgb: this.props.useRgb });
   }
 
   render() {
-    const { colors } = this.state;
+    const { colors, colorsRgb, useRgb } = this.state;
     return(
-      <Div colors={colors}></Div>
+      <Div colors={useRgb ? colorsRgb : colors}></Div>
     );
   }
 }

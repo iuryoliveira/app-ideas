@@ -13,9 +13,17 @@ export default class App extends Component {
       blue: '00'
     },
 
+    colorsRgb: {
+      red: 0,
+      green: 0,
+      blue: 0
+    },
+
     started: false,
     interval: null,
-    incrementValue: 0
+
+    incrementValue: 0,
+    useRgb: false,
   }
 
   handleRedChange = async (event) => {
@@ -41,14 +49,18 @@ export default class App extends Component {
 
   handleColorChange = async () => {
     let started = !this.state.started;
-    await this.setState({ started });
+    let useRgb = !this.state.useRgb;
 
-    if(started) {
-      let interval = setInterval(() => console.log(`Acrescentando + ${this.state.incrementValue}`), 250);
-      await this.setState({ interval });
-    } else {
-      clearInterval(this.state.interval);
-      await this.setState({ interval: null })
+    if(this.state.incrementValue > 0) {
+      await this.setState({ started, useRgb });
+
+      if(started) {
+        let interval = setInterval(() => this.handleIncrement(), 250);
+        await this.setState({ interval });
+      } else {
+        clearInterval(this.state.interval);
+        await this.setState({ interval: null })
+      }
     }
   }
 
@@ -57,8 +69,19 @@ export default class App extends Component {
     await this.setState({ incrementValue });
   }
 
+  handleIncrement = async () => {
+    let colorsRgb = this.state.colorsRgb;
+    colorsRgb.red = parseInt(colorsRgb.red) + parseInt(this.state.incrementValue);
+
+    if(this.state.colorsRgb.red > 255) colorsRgb.red = 0;
+
+    await this.setState({ colorsRgb });
+    console.log(`Incrementou ${this.state.incrementValue} para um total de ${this.state.colorsRgb.red}`);
+  }
+
   render() {
-    const { colors: { red, green, blue }, colors, started, incrementValue } = this.state;
+    const { colors: { red, green, blue },colors, started, incrementValue,
+    colorsRgb, useRgb } = this.state;
 
     return (
       <div className="App">
@@ -66,7 +89,7 @@ export default class App extends Component {
         <ColorInput color="Green" onChange={(e) => this.handleGreenChange(e)} value={green}/>
         <ColorInput color="Blue" onChange={(e) => this.handleBlueChange(e)} value={blue}/>
 
-        <ColorBox colors={colors}/>
+        <ColorBox useRgb={useRgb} colorsRgb={colorsRgb} colors={colors}/>
         <IncrementInput onChange={(e) => this.handleIncrementInput(e)} value={incrementValue}/>
         <StartButton started={started} onClick={() => this.handleColorChange()} />
       </div>
